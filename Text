@@ -1,0 +1,53 @@
+Create Operation:
+
+   - Create a new database named "library" and switch to it.
+     use library 
+
+   - Create a collection named "books" with fields: title, author, and published_year.
+     db.createCollection("books")
+
+   - Insert a document into the "books" collection with the details of your favorite book.
+     db.books.insertOne({
+      name:"ABC"
+      author:"Indira"
+      published_year:1990})
+
+Read Operation:
+
+   - Retrieve all documents from the "books" collection.
+     db.books.find()
+
+   - Find and display only the documents where the author is "J.K. Rowling".
+     db.books.find({author:"J.K.Rowling"})
+ 
+   - Fetch and display the document with the earliest published year.
+     db.books.find().sort({published_year :1}).limit(1)
+
+Update Operation:
+
+   - Update the published year of the book with the title "The Catcher in the Rye" to the current year.
+     db.books.update({title:"The Catcher in the Rye"},{$set:{published_year:2024})
+
+   - Add a new field "genre" with the value "Mystery" to all documents in the "books" collection.
+     db.books.update({},{$set:{genre:"Mystery"}},{multi:true})
+
+Delete Operation:
+
+   - Remove the document with the title "1984" from the "books" collection.
+     db.books.remove({title:"1984"})
+
+   - Delete all documents from the "books" collection where the published year is before 2000.
+     db.books.remove({published_year:{$lt:2000}})
+
+Advanced Query
+
+   -Find and display the top 3 recently published books
+db.books.find().sort({ published_year: -1 }).limit(3)
+
+   -Retrieve documents where the title contains "MongoDB" or "NoSQL"
+db.books.find({
+  $or: [
+    { title: /MongoDB/i },
+    { title: /NoSQL/i }
+  ]
+})
